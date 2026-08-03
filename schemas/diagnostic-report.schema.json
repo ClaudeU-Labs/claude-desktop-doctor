@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ClaudeU-Labs/claude-desktop-doctor/schemas/diagnostic-report.schema.json",
+  "title": "Claude Desktop Doctor diagnostic report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "tool",
+    "generatedAtUtc",
+    "privacy",
+    "system",
+    "installation",
+    "configuration",
+    "network",
+    "checks",
+    "summary"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "const": "claude-desktop-doctor" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
+      }
+    },
+    "generatedAtUtc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "configContentRead",
+        "rawLogsRead",
+        "secretValuesRead",
+        "containsSensitiveData"
+      ],
+      "properties": {
+        "mode": { "const": "strict-allowlist" },
+        "configContentRead": { "const": false },
+        "rawLogsRead": { "const": false },
+        "secretValuesRead": { "const": false },
+        "containsSensitiveData": { "const": false }
+      }
+    },
+    "system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "osFamily",
+        "osBuild",
+        "architecture",
+        "powershellVersion",
+        "wingetAvailable",
+        "systemProxyEnabled"
+      ],
+      "properties": {
+        "osFamily": { "enum": ["windows", "other"] },
+        "osBuild": { "type": "integer", "minimum": 0 },
+        "architecture": { "enum": ["x64", "arm64", "x86", "unknown"] },
+        "powershellVersion": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+        "wingetAvailable": { "type": "boolean" },
+        "systemProxyEnabled": { "type": "boolean" }
+      }
+    },
+    "installation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["detected", "channel", "version", "signatureStatus", "processRunning"],
+      "properties": {
+        "detected": { "type": "boolean" },
+        "channel": { "enum": ["appx", "classic", "not-detected"] },
+        "version": {
+          "type": ["string", "null"],
+          "pattern": "^\\d+(?:\\.\\d+){0,3}(?:-[A-Za-z0-9.-]+)?$"
+        },
+        "signatureStatus": {
+          "enum": ["valid", "not-signed", "hash-mismatch", "not-trusted", "unknown", "unavailable", "not-checked"]
+        },
+        "processRunning": { "type": "boolean" }
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["files", "contentInspected"],
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "present"],
+            "properties": {
+              "id": {
+                "enum": ["roaming-claude-desktop-config", "local-claude-desktop-config"]
+              },
+              "present": { "type": "boolean" }
+            }
+          }
+        },
+        "contentInspected": { "const": false }
+      }
+    },
+    "network": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "endpoints"],
+      "properties": {
+        "mode": { "enum": ["offline", "explicit"] },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["host", "dnsSucceeded", "tcp443Succeeded", "tlsSucceeded", "tlsProtocol"],
+            "properties": {
+              "host": {
+                "enum": ["claude.ai", "docs.anthropic.com", "downloads.claude.ai"]
+              },
+              "dnsSucceeded": { "type": "boolean" },
+              "tcp443Succeeded": { "type": "boolean" },
+              "tlsSucceeded": { "type": "boolean" },
+              "tlsProtocol": {
+                "type": ["string", "null"],
+                "enum": ["Tls", "Tls11", "Tls12", "Tls13", "other", null]
+              }
+            }
+          }
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "title", "message", "remediationId"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$" },
+          "status": { "enum": ["PASS", "WARN", "FAIL", "UNKNOWN", "SKIPPED"] },
+          "title": { "type": "string", "maxLength": 240 },
+          "message": { "type": "string", "maxLength": 240 },
+          "remediationId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$" }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pass", "warn", "fail", "unknown", "skipped", "exitCode"],
+      "properties": {
+        "pass": { "type": "integer", "minimum": 0 },
+        "warn": { "type": "integer", "minimum": 0 },
+        "fail": { "type": "integer", "minimum": 0 },
+        "unknown": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 },
+        "exitCode": { "enum": [0, 1, 2] }
+      }
+    }
+  }
+}

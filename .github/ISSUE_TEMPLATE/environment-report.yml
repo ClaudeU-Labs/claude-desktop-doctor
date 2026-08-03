@@ -1,0 +1,44 @@
+name: Missing environment check
+description: Propose a new read-only check for a recurring Windows issue.
+title: "[Check request]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        New checks must be read-only, offline by default, and safe for a strict allowlist report. Requests to bypass account, region, subscription, payment, abuse-prevention, or service controls are out of scope.
+
+  - type: textarea
+    id: symptom
+    attributes:
+      label: User-visible symptom
+      description: Describe the recurring problem without private workstation data.
+    validations:
+      required: true
+
+  - type: textarea
+    id: metadata
+    attributes:
+      label: Minimum metadata needed
+      description: List the smallest non-sensitive metadata needed to distinguish the cause.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Boundary confirmation
+      options:
+        - label: The proposed check does not need configuration contents, raw logs, credentials, identities, complete paths, process arguments, or arbitrary network access.
+          required: true
+        - label: The proposed check can run without changing Windows or application state.
+          required: true
+
+  - type: textarea
+    id: expected-output
+    attributes:
+      label: Proposed allowlisted output
+      description: List fixed fields and enumerated values only.
+    validations:
+      required: true

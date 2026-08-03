@@ -1,0 +1,43 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-powershell:
+    name: Windows PowerShell 5.1
+    runs-on: windows-2022
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Run dependency-free tests
+        shell: powershell
+        run: .\tests\run-tests.ps1
+
+      - name: Run sensitive-data scan
+        shell: powershell
+        run: .\tests\run-sensitive-scan.ps1
+
+  powershell-7:
+    name: PowerShell 7
+    runs-on: windows-2022
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Run dependency-free tests
+        shell: pwsh
+        run: .\tests\run-tests.ps1
+
+      - name: Run sensitive-data scan
+        shell: pwsh
+        run: .\tests\run-sensitive-scan.ps1

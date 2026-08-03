@@ -1,0 +1,77 @@
+name: Doctor bug
+description: Report incorrect Doctor behavior without uploading private workstation data.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a problem. Attach only a Doctor-generated report after reviewing it. Never attach raw configuration, logs, screenshots, browser data, tokens, or account details.
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: I reviewed every attachment and did not include raw configuration, logs, credentials, account data, usernames, computer names, IP addresses, or complete paths.
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Doctor version
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: shell
+    attributes:
+      label: PowerShell family
+      options:
+        - Windows PowerShell 5.1
+        - PowerShell 7+
+    validations:
+      required: true
+
+  - type: dropdown
+    id: network-mode
+    attributes:
+      label: Network mode
+      options:
+        - Offline default
+        - Explicit network checks
+    validations:
+      required: true
+
+  - type: input
+    id: check-id
+    attributes:
+      label: Affected check ID
+      description: Copy only the fixed check ID, such as desktop.installation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened?
+      description: Describe behavior using synthetic or redacted examples.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Do not paste raw commands containing private paths, proxy addresses, or credentials.
+    validations:
+      required: true

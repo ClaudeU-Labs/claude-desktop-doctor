@@ -1,0 +1,5 @@
+doctor-output/
+*.tmp
+*.zip
+.DS_Store
+Thumbs.db
