@@ -174,6 +174,8 @@ $requiredFiles = @(
     "SECURITY.md",
     "CONTRIBUTING.md",
     "CHANGELOG.md",
+    "docs\diagnostic-decision-tree.md",
+    "docs\compatibility-and-maintenance.md",
     "schemas\diagnostic-report.schema.json",
     ".github\workflows\test.yml",
     ".github\ISSUE_TEMPLATE\bug-report.yml",
@@ -184,7 +186,27 @@ foreach ($requiredFile in $requiredFiles) {
 }
 
 $readme = Get-Content -Raw -Encoding UTF8 -LiteralPath (Join-Path $repoRoot "README.md")
-Assert-True -Condition $readme.Contains("utm_campaign=claude_desktop_doctor") -Message "README contains the scoped ClaudeU CTA campaign"
-Assert-True -Condition $readme.Contains("not affiliated with") -Message "README contains the independence disclaimer"
+Assert-True -Condition ($readme.Contains("https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_hero")) -Message "README hero CTA uses the product homepage and scoped campaign"
+Assert-True -Condition ($readme.Contains("utm_content=readme_footer")) -Message "README footer CTA keeps a position-specific marker"
+Assert-True -Condition (-not ($readme -match 'https://claudeu\.com/(?:zh-CN|en-US)/(?:download|guide|support)')) -Message "README has no deprecated GitHub-specific ClaudeU destination"
+Assert-True -Condition ($readme.Contains("not affiliated with")) -Message "README contains the independence disclaimer"
+
+Assert-True -Condition (@([regex]::Matches($readme, '(?m)^### ')).Count -ge 10) -Message "README contains a complete professional section hierarchy"
+foreach ($requiredReference in @(
+    "docs/diagnostic-decision-tree.md",
+    "docs/compatibility-and-maintenance.md",
+    "PRIVACY.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "schemas/diagnostic-report.schema.json"
+)) {
+    Assert-True -Condition ($readme.Contains($requiredReference)) -Message "README links required reader guidance: $requiredReference"
+}
+
+$allMarkdown = Get-ChildItem -LiteralPath $repoRoot -Recurse -File -Filter "*.md"
+foreach ($markdownFile in $allMarkdown) {
+    $markdownText = Get-Content -Raw -Encoding UTF8 -LiteralPath $markdownFile.FullName
+    Assert-True -Condition (-not ($markdownText -match 'https://claudeu\.com/(?:zh-CN|en-US)/(?:download|guide|support)')) -Message "Markdown uses no deprecated ClaudeU destination: $($markdownFile.Name)"
+}
 
 Write-Host "PASS: dependency-free Doctor tests"

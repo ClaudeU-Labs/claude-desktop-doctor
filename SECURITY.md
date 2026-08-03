@@ -8,7 +8,7 @@ Security fixes are applied to the latest released version. Until the first stabl
 
 Do not open a public issue for a vulnerability that may disclose private data, enable unintended network access, or cause system mutation.
 
-Use GitHub Private Vulnerability Reporting when it is enabled for this repository. If it is unavailable, use the security contact published on [claudeu.com](https://claudeu.com/) and include only:
+Use GitHub Private Vulnerability Reporting when it is enabled for this repository. If it is unavailable, use the security contact published on the [ClaudeU product homepage](https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude-desktop-doctor&utm_content=security-contact) and include only:
 
 - the affected Doctor version;
 - the check ID or source file involved;
