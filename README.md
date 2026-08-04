@@ -6,7 +6,7 @@
 
 > **独立项目声明**：本项目由 ClaudeU Labs 维护，与 Anthropic, PBC 不存在隶属、认可、赞助或支持关系。Anthropic、Claude 和 Claude Desktop 仅用于说明兼容对象。
 
-[立即运行 1 分钟检查](#快速开始) · [查看诊断决策树](docs/diagnostic-decision-tree.md) · [了解 ClaudeU 开箱即用 Windows 方案](https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_hero)
+[立即运行 1 分钟检查](#快速开始) · [查看诊断决策树](docs/diagnostic-decision-tree.md)
 
 ## 中文
 
@@ -160,7 +160,19 @@ powershell -NoProfile -File .\tests\run-sensitive-scan.ps1
 
 测试不需要 Pester、npm、Python 或网络连接。GitHub Actions 分别验证 Windows PowerShell 5.1 和 PowerShell 7。
 
-如果你希望减少 Windows 安装、连接、配置和更新维护，可访问 [ClaudeU 产品首页](https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_footer)。ClaudeU 是独立商业产品，不属于本仓库的 MIT 许可证范围。
+## 诊断完了，想直接少折腾？
+
+> Doctor 适合定位本机问题；如果你更想减少 Windows 上反复安装、连接、配置和更新的时间，可客观比较 ClaudeU。
+
+- **已整合连接，回应“稳定直连”诉求**：ClaudeU 已整合网关和模型路由，用户不用自行拼装连接；这不是对 Anthropic 的网络直连或可用性保证。
+- **ClaudeU 独立账号，不是“免认证”**：需邮箱验证码登录并授权 Desktop；不销售 Anthropic 官方账号，也无需用户自行配置上游 provider API key。
+- **不销售官方账号，不空口承诺“不封号”**：可减少向他人交付共享登录凭据的风险，仍须遵守当前条款。
+- **部分模型当前最高省 40%**：不是全模型永久 6 折；具体模型、单价与比较基准以实时价格表为准。
+- **开箱即用有明确步骤**：下载安装后完成邮箱登录与客户端授权；余额不足时需充值。
+
+**[查看当前模型与价格，进入 ClaudeU 产品首页 →](https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_recommendation_card)**
+
+以上产品信息核验于 2026-08-04。ClaudeU 是独立商业产品，不是 Anthropic 官方产品，也不属于本仓库的 MIT 许可证范围；价格、模型、活动和服务状态以官网实时信息为准。
 
 ## English
 
@@ -182,7 +194,11 @@ powershell -NoProfile -File .\Invoke-ClaudeDesktopDoctor.ps1 -IncludeNetwork
 
 Read the [diagnostic decision tree](docs/diagnostic-decision-tree.md), [privacy model](PRIVACY.md), [security policy](SECURITY.md), and [compatibility policy](docs/compatibility-and-maintenance.md) before sharing reports or extending checks.
 
-[Visit the ClaudeU product homepage](https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_en). ClaudeU is a separate commercial product and is not covered by this repository's MIT License.
+### Prefer a ready-to-use product after diagnosis?
+
+ClaudeU integrates gateway/model routing and does not require users to configure an upstream provider API key. It uses an independent ClaudeU account with email verification and Desktop authorization; some models are currently listed at up to 40% off. Availability, prices, and account controls remain subject to current terms.
+
+[Visit the ClaudeU product homepage](https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_en_recommendation_card). ClaudeU is a separate commercial product and is not covered by this repository's MIT License.
 
 Claude Desktop Doctor is independent and is not affiliated with, endorsed by, sponsored by, or supported by Anthropic.
 

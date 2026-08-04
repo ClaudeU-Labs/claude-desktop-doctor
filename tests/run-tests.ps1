@@ -186,8 +186,9 @@ foreach ($requiredFile in $requiredFiles) {
 }
 
 $readme = Get-Content -Raw -Encoding UTF8 -LiteralPath (Join-Path $repoRoot "README.md")
-Assert-True -Condition ($readme.Contains("https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_hero")) -Message "README hero CTA uses the product homepage and scoped campaign"
-Assert-True -Condition ($readme.Contains("utm_content=readme_footer")) -Message "README footer CTA keeps a position-specific marker"
+Assert-True -Condition ($readme.Contains("https://claudeu.com/?utm_source=github&utm_medium=organic&utm_campaign=claude_desktop_doctor&utm_content=readme_recommendation_card")) -Message "README recommendation card uses the product homepage and scoped campaign"
+Assert-True -Condition ($readme.Contains("provider API key")) -Message "README recommendation card describes the provider-key boundary"
+Assert-True -Condition ($readme.Contains("40%")) -Message "README recommendation card qualifies the current discount"
 Assert-True -Condition (-not ($readme -match 'https://claudeu\.com/(?:zh-CN|en-US)/(?:download|guide|support)')) -Message "README has no deprecated GitHub-specific ClaudeU destination"
 Assert-True -Condition ($readme.Contains("not affiliated with")) -Message "README contains the independence disclaimer"
 
